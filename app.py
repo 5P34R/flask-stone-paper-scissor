@@ -19,7 +19,9 @@ def index():
     print(data)
     return render_template('index.html', async_mode=socket_.async_mode)
 
-
+@app.route('/success/<username>')
+def success(username):
+    return render_template('success.html', username=username)
 @app.route("/play/<username>")
 def play(username):
    return render_template('play.html', username=username)
@@ -27,7 +29,6 @@ def play(username):
 
 @socket_.on('my_event', namespace='/test')
 def test_message(message):
-    score = 0
     print(message['data'])
     commads = ['scissors','rock', 'paper']
     if message['data'] in commads:
@@ -35,10 +36,11 @@ def test_message(message):
       val = ComputerGame(message['data'])
       session['score'] = session.get('score', 0) + val[1]
       session['receive_count'] = session.get('receive_count', 0) + 1
-      emit('my_response',
-            {'data': val[0], 'count': session['receive_count'], 'score':session['score'], 'hand':val[2]})
-
-
+      if session['score'] >= 10:
+        emit('my_response',
+                {'data': val[0], 'count': session['receive_count'], 'score':session['score'], 'hand':val[2]})
+      else:
+          emit('my_response',{'data': 'You Win!'})
 
 @socket_.on('disconnect_request', namespace='/test')
 def disconnect_request():

@@ -29,15 +29,21 @@
                //document.getElementById('computerPlay').appendChild(img);
                console.log(msg.hand)
                document.getElementById('computerPlay').src=`/static/images/${msg.hand}.png`
-               document.getElementById('computerPlay').className="bg-white mt-20 object-contain h-60 w-96"
+               document.getElementById('computerPlay').className="bg-white mt-20 object-contain h-60 w-96 rounded-md bg-transparent"
                if (msg.data === 'Disconnected!'){
                    window.location.replace('http://127.0.0.1:5000/')
                     alert(msg.data)
-                }else {
+                }else if (msg.data === "You Win!"){
+                    const username = localStorage.getItem('username')
+                    console.log("you win called")
+                    window.location.replace(`http://127.0.0.1:5000/success/${username}`)
+                }
+                else {
                     console.log(msg.score)
                     alert(msg.data)
                     if (cb)
                     cb();
+
                 }
             });
             $('form#emit1').submit(function(event) {
@@ -83,13 +89,13 @@
 <footer class="absolute bottom-6 w-full">
     <div class="flex justify-center items-center">
         <form  id="emit1" action="#" method="POST" class="">
-            <button name="emit_data1" id="emit_data1" value="rock"><img src="/static/images/rock.png" class="object-contain h-48 w-96 cursor-pointer" value="rock"></button>
+            <button name="emit_data1" id="emit_data1" value="rock"><img src="/static/images/rock.png" class="object-contain h-40 w-96 cursor-pointer" value="rock"></button>
         </form>
         <form  id="emit2" action="#" method="POST" class="">
-            <button name="emit_data2" id="emit_data2" value="paper"><img src="/static/images/paper.png" class="object-contain h-48 w-96 cursor-pointer" value="rock"></button>
+            <button name="emit_data2" id="emit_data2" value="paper"><img src="/static/images/paper.png" class="object-contain h-40 w-96 cursor-pointer" value="rock"></button>
         </form>
         <form  id="emit3" action="#" method="POST" class="">
-            <button name="emit_data3" id="emit_data3" value="scissors"><img src="/static/images/scissor.png" class="object-contain h-48 w-96 cursor-pointer" value="rock"></button>
+            <button name="emit_data3" id="emit_data3" value="scissors"><img src="/static/images/scissor.png" class="object-contain h-40 w-96 cursor-pointer" value="rock"></button>
         </form>
         <!-- <form  id="emit" method="POST" action='#'>
             <input type="text" name="emit_data" id="emit_data" placeholder="Message">
