@@ -23,19 +23,14 @@
             socket.on('my_response', function(msg, cb) {
                //$('#log').append('<br>' + $('<div/>').text('logs #' + msg.count + ': ' + msg.data).html());
                document.getElementById('scoreboard').innerText = msg.score
-             //  const img = document.createElement('img')
-               //img.src = `/static/images/paper.png`
-               //img.className = "bg-white mt-20 object-contain h-60 w-96"
-               //document.getElementById('computerPlay').appendChild(img);
                console.log(msg.hand)
                document.getElementById('computerPlay').src=`/static/images/${msg.hand}.png`
                document.getElementById('computerPlay').className="bg-white mt-20 object-contain h-60 w-96 rounded-md bg-transparent"
                if (msg.data === 'Disconnected!'){
                    window.location.replace('http://127.0.0.1:5000/')
                     alert(msg.data)
-                }else if (msg.data === "You Win!"){
+                }else if (msg.data === 'You Win!'){
                     const username = localStorage.getItem('username')
-                    console.log("you win called")
                     window.location.replace(`http://127.0.0.1:5000/success/${username}`)
                 }
                 else {

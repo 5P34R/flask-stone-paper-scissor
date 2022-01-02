@@ -36,11 +36,13 @@ def test_message(message):
       val = ComputerGame(message['data'])
       session['score'] = session.get('score', 0) + val[1]
       session['receive_count'] = session.get('receive_count', 0) + 1
-      if session['score'] >= 10:
+      if session['score'] <= 9: 
         emit('my_response',
                 {'data': val[0], 'count': session['receive_count'], 'score':session['score'], 'hand':val[2]})
       else:
-          emit('my_response',{'data': 'You Win!'})
+          emit('my_response',
+                {'data': 'You Win!'})
+     
 
 @socket_.on('disconnect_request', namespace='/test')
 def disconnect_request():
